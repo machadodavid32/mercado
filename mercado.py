@@ -4,27 +4,26 @@ from time import sleep
 from models.produto import Produto
 from utils.helper import formata_float_str_moeda
 
-produtos: List[Produto] = []  # Vai criar uma lista de produto
 
+produtos: List[Produto] = []
 carrinho: List[Dict[Produto, int]] = []
-"""Será uma lista de dicionária que contém o Produto e 
-um inteiro que é a quantidade de produtos"""
+
 
 def main() -> None:
     menu()
 
 def menu() -> None:
-    print('=============================')
-    print('======== Bem_Vindo(a) =======')
-    print('======== Seu Mercado ========')
-    print('=============================')
+    print('===================================')
+    print('=========== Bem-vindo(a) ==========')
+    print('===========  Geek Shop   ==========')
+    print('===================================')
 
     print('Selecione uma opção abaixo: ')
     print('1 - Cadastrar produto')
     print('2 - Listar produto')
     print('3 - Comprar produto')
     print('4 - Visualizar carrinho')
-    print('5 - Fechar Pedido')
+    print('5 - Fechar pedido')
     print('6 - Sair do sistema')
 
     opcao: int = int(input())
@@ -41,12 +40,12 @@ def menu() -> None:
         fechar_pedido()
     elif opcao == 6:
         print('Volte sempre!')
-        sleep(2)  # aguardar dois segundos, para que não saia do sistema de forma instântanea
-        exit(0)  # sair do sistema
+        sleep(2)
+        exit(0)
     else:
-        print('Opção inválida')
+        print('Opção inválida!')
+        sleep(1)
         menu()
-
 
 
 def cadastrar_produto() -> None:
@@ -58,35 +57,34 @@ def cadastrar_produto() -> None:
 
     produto: Produto = Produto(nome, preco)
 
-    produtos.append(produto)  # Aqui nós vamos adicionar na lista produtos criada logo acima
+    produtos.append(produto)
 
     print(f'O produto {produto.nome} foi cadastrado com sucesso!')
     sleep(2)
     menu()
 
-
 def listar_produtos() -> None:
     if len(produtos) > 0:
-        print('Listagem de Produtos')
+        print('Listagem de produtos')
         print('--------------------')
         for produto in produtos:
             print(produto)
             print('----------------')
             sleep(1)
     else:
-        print('Ainda não existem produtos cadastrados')
+        print('Ainda não existem produtos cadastrados.')
     sleep(2)
     menu()
 
 
 def comprar_produto() -> None:
     if len(produtos) > 0:
-        print('Informe o código do produto que deseja adicionar ao carrinho')
-        print('------------------------------------------------------------')
-        print('================= Produtos disponíveis =====================')
+        print('Informe o código do produto que deseja adicionar ao carrinho: ')
+        print('--------------------------------------------------------------')
+        print('================== Produtos Disponíveis ======================')
         for produto in produtos:
             print(produto)
-            print('--------------------------------------------------------')
+            print('---------------------------------------------------------')
             sleep(1)
         codigo: int = int(input())
 
@@ -96,11 +94,11 @@ def comprar_produto() -> None:
             if len(carrinho) > 0:
                 tem_no_carrinho: bool = False
                 for item in carrinho:
-                    quant: int = item.get(produto)  # como se trata de um dicionário, o get serve para pegar o valor
+                    quant: int = item.get(produto)
                     if quant:
                         item[produto] = quant + 1
-                        print(f'O produto {produto.nome} agora possui {quant + 1} unidades no carrinho')
-                        tem_no_carrinho: True
+                        print(f'O produto {produto.nome} agora possui {quant + 1} unidades no carrinho.')
+                        tem_no_carrinho = True
                         sleep(2)
                         menu()
                 if not tem_no_carrinho:
@@ -116,15 +114,13 @@ def comprar_produto() -> None:
                 sleep(2)
                 menu()
         else:
-            print(f'O produto com o código {codigo} não foi encontrado')
+            print(f'O produto com código {codigo} não foi encontrado.')
             sleep(2)
             menu()
-
     else:
         print('Ainda não existem produtos para vender.')
     sleep(2)
     menu()
-
 
 def visualizar_carrinho() -> None:
     if len(carrinho) > 0:
@@ -137,29 +133,28 @@ def visualizar_carrinho() -> None:
                 print('-----------------------')
                 sleep(1)
     else:
-        print('Ainda não existem produtos no carrinho')
+        print('Ainda não existem produtos no carrinho.')
     sleep(2)
     menu()
 
-
 def fechar_pedido() -> None:
     if len(carrinho) > 0:
-        valor_total: float = 0  # Aqui é a somatória de valor total do carrinho
+        valor_total: float = 0
 
-        print('Produtos do carrinho')
+        print('Produtos do Carrinho')
         for item in carrinho:
-            for dados in item.items():  # Aqui vai me dar todos os iténs de chave e valor
-                print(dados[0])  # na posição 0 estará a chave, que é o Produto(), que mostra todos os dados do produto
-                print(f'Quantidade: {dados[1]}')  # Aqui na chave 1 apresentará a quant de produtos
+            for dados in item.items():
+                print(dados[0])
+                print(f'Quantidade: {dados[1]}')
                 valor_total += dados[0].preco * dados[1]
-                print('--------------------')
+                print('------------------------')
                 sleep(1)
         print(f'Sua fatura é {formata_float_str_moeda(valor_total)}')
-        print('Volte Sempre')
+        print('Volte sempre!')
         carrinho.clear()
         sleep(5)
     else:
-        print('Ainda não existem produtos no carrinho')
+        print('Ainda não existem produtos no carrinho.')
     sleep(2)
     menu()
 
@@ -171,7 +166,6 @@ def pega_produto_por_codigo(codigo: int) -> Produto:
             p = produto
     return p
 
-if __name__ == '--main--':
+if __name__ == '__main__':
     main()
-
 

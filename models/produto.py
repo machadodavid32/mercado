@@ -24,6 +24,6 @@ class Produto:
         return self.__preco
 
     def __str__(self) -> str:
-        return f'Código: {self.codigo} \nPreço: {formata_float_str_moeda(self.preco)}'
+        return f'Código: {self.codigo} \nNome: {self.nome}:\nPreço {formata_float_str_moeda(self.preco)}'
 
 
